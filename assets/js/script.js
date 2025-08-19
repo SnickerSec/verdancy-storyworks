@@ -68,6 +68,41 @@ function initNavigation() {
             }
         });
     });
+
+    // Dropdown functionality
+    const dropdown = document.querySelector('.nav-dropdown');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    
+    if (dropdown && dropdownToggle) {
+        // Toggle dropdown on click (for mobile)
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Close dropdown when clicking on dropdown links
+        const dropdownLinks = dropdown.querySelectorAll('.dropdown-link');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                dropdown.classList.remove('active');
+            });
+        });
+
+        // Handle keyboard navigation
+        dropdownToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                dropdown.classList.toggle('active');
+            }
+        });
+    }
 }
 
 // Scroll-based animations
