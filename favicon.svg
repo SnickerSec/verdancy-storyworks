@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ff00ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Dark background -->
+  <rect width="32" height="32" fill="#0a0a0a"/>
+  
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="4" height="4" patternUnits="userSpaceOnUse">
+      <path d="M 4 0 L 0 0 0 4" fill="none" stroke="#333" stroke-width="0.3" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="32" height="32" fill="url(#grid)"/>
+  
+  <!-- Main "V" shape -->
+  <path d="M 8 6 L 16 22 L 24 6" 
+        stroke="url(#neonGradient)" 
+        stroke-width="2.5" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        filter="url(#glow)"/>
+  
+  <!-- Glitch lines -->
+  <line x1="6" y1="8" x2="10" y2="8" stroke="#00ffff" stroke-width="0.8" opacity="0.7"/>
+  <line x1="22" y1="10" x2="26" y2="10" stroke="#ff00ff" stroke-width="0.8" opacity="0.7"/>
+  <line x1="14" y1="20" x2="18" y2="20" stroke="#00ff88" stroke-width="0.8" opacity="0.7"/>
+  
+  <!-- Corner accents -->
+  <rect x="2" y="2" width="3" height="1" fill="#00ffff" opacity="0.6"/>
+  <rect x="27" y="2" width="3" height="1" fill="#ff00ff" opacity="0.6"/>
+  <rect x="2" y="29" width="3" height="1" fill="#00ff88" opacity="0.6"/>
+  <rect x="27" y="29" width="3" height="1" fill="#00ffff" opacity="0.6"/>
+</svg>
