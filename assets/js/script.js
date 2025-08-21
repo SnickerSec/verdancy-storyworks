@@ -266,6 +266,14 @@ function initNewsletterForm() {
                 current_time: new Date().toLocaleString()
             };
 
+            // Debug: Log configuration being used
+            console.log('EmailJS Config:', {
+                serviceId: EMAIL_CONFIG.serviceId,
+                templateId: EMAIL_CONFIG.templateId,
+                publicKey: EMAIL_CONFIG.publicKey.substring(0, 5) + '...'
+            });
+            console.log('Template params:', templateParams);
+
             emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
                 .then((response) => {
                     console.log('Newsletter subscription successful!', response.status, response.text);
@@ -273,7 +281,23 @@ function initNewsletterForm() {
                     input.value = '';
                 }, (error) => {
                     console.error('Newsletter subscription failed:', error);
-                    showStatus('Connection failed. Please try again later.', 'error');
+                    console.error('Error details:', {
+                        status: error.status,
+                        text: error.text,
+                        message: error.message
+                    });
+                    
+                    // More specific error messages
+                    let errorMsg = 'Connection failed. Please try again later.';
+                    if (error.status === 400) {
+                        errorMsg = 'Invalid request. Please check your email format.';
+                    } else if (error.status === 401 || error.status === 403) {
+                        errorMsg = 'Authentication failed. Please contact support.';
+                    } else if (error.status === 404) {
+                        errorMsg = 'Service not found. Please contact support.';
+                    }
+                    
+                    showStatus(errorMsg, 'error');
                 });
         });
 
