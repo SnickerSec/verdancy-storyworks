@@ -224,6 +224,18 @@ function initNewsletterForm() {
     const status = document.querySelector('.form-status');
 
     if (form) {
+        // Check if EmailJS is configured
+        const isConfigured = EMAIL_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY' && 
+                           EMAIL_CONFIG.serviceId !== 'YOUR_SERVICE_ID' && 
+                           EMAIL_CONFIG.templateId !== 'YOUR_TEMPLATE_ID';
+
+        if (isConfigured) {
+            // Initialize EmailJS
+            emailjs.init({
+                publicKey: EMAIL_CONFIG.publicKey,
+            });
+        }
+
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -234,13 +246,35 @@ function initNewsletterForm() {
                 return;
             }
 
-            // Simulate form submission
             showStatus('Connecting to transmission network...', 'loading');
-            
-            setTimeout(() => {
-                showStatus('Successfully connected! Welcome to the network.', 'success');
-                input.value = '';
-            }, 2000);
+
+            if (!isConfigured) {
+                // Fallback for when EmailJS is not configured
+                console.warn('EmailJS not configured. Newsletter subscription for:', email);
+                setTimeout(() => {
+                    showStatus('Configuration required. Check console for setup instructions.', 'error');
+                }, 1000);
+                return;
+            }
+
+            // Send email using EmailJS
+            const templateParams = {
+                user_email: email,
+                message: `New newsletter subscription from: ${email}`,
+                to_name: 'Verdancy Storyworks',
+                from_name: email,
+                current_time: new Date().toLocaleString()
+            };
+
+            emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
+                .then((response) => {
+                    console.log('Newsletter subscription successful!', response.status, response.text);
+                    showStatus('Successfully connected! Welcome to the network.', 'success');
+                    input.value = '';
+                }, (error) => {
+                    console.error('Newsletter subscription failed:', error);
+                    showStatus('Connection failed. Please try again later.', 'error');
+                });
         });
 
         // Input focus effects
