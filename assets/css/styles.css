@@ -417,7 +417,6 @@ main {
 .hero-cover-image {
     width: 80%;
     height: 80%;
-    object-fit: cover;
     border-radius: 5px;
     filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.3));
     transition: all 0.3s ease;
