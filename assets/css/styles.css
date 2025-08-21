@@ -947,10 +947,11 @@ main {
     
     .nav-toggle {
         display: flex;
-        padding: 0.5rem;
+        padding: 0.5rem 0.25rem;
         margin-right: 0;
         position: relative;
         z-index: 1001;
+        flex-shrink: 0;
     }
     
     .nav-toggle.active span:nth-child(1) {
@@ -979,7 +980,10 @@ main {
     }
     
     .nav {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
     }
     
     /* Mobile dropdown adjustments */
