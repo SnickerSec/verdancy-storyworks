@@ -414,6 +414,20 @@ main {
     font-size: 1.2rem;
 }
 
+.hero-cover-image {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 5px;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.3));
+    transition: all 0.3s ease;
+}
+
+.hero-cover-image:hover {
+    filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.5));
+    transform: scale(1.02);
+}
+
 /* Glitch Text Effect */
 .glitch-text {
     position: relative;
@@ -599,6 +613,19 @@ main {
     font-size: 1.5rem;
     color: var(--accent-green);
     font-weight: 700;
+}
+
+.book-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+}
+
+.book-card:hover .book-cover-image {
+    transform: scale(1.05);
+    filter: drop-shadow(0 10px 25px rgba(0, 255, 255, 0.2));
 }
 
 .book-info {
