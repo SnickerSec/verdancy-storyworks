@@ -8,7 +8,8 @@
 const EMAIL_CONFIG = {
     publicKey: 'nR_-W_MJdmfJ87-Rp',     // Your EmailJS public key
     serviceId: 'service_koav5x5',       // Your EmailJS service ID
-    templateId: 'template_2pxdjfy'      // Your EmailJS template ID
+    templateId: 'template_2pxdjfy',     // Your EmailJS template ID
+    adminEmail: 'verdancystoryworks@outlook.com' // Email to receive notifications
 };
 
 // Example template for EmailJS:

@@ -262,6 +262,7 @@ function initNewsletterForm() {
                 user_email: email,
                 message: `New newsletter subscription from: ${email}`,
                 to_name: 'Verdancy Storyworks',
+                to_email: EMAIL_CONFIG.adminEmail, // Email to receive notifications
                 from_name: email,
                 current_time: new Date().toLocaleString()
             };
