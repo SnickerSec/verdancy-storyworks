@@ -8,5 +8,5 @@ Disallow: /assets/js/config.js
 # Sitemap
 Sitemap: https://verdancystoryworks.com/sitemap.xml
 
-# Crawl-delay for better server performance
-Crawl-delay: 1
+# Crawl rate should be managed via Google Search Console
+# instead of using Crawl-delay directive (not supported by Googlebot)
