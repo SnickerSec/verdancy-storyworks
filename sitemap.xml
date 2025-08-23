@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    
+    <!-- Home Page -->
+    <url>
+        <loc>https://verdancystoryworks.com/</loc>
+        <lastmod>2025-08-23</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://verdancystoryworks.com/assets/images/absence-of-magnetism-cover.jpg</image:loc>
+            <image:title>The Absence of Magnetism - Volume I</image:title>
+            <image:caption>Latest release from Verdancy Storyworks</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://verdancystoryworks.com/assets/images/verdancy-murder.jpg</image:loc>
+            <image:title>Volume II - Absence of Magnetism: Planet B</image:title>
+            <image:caption>Second volume in the dystopian series</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://verdancystoryworks.com/assets/images/victory-denied.jpg</image:loc>
+            <image:title>Volume III - Absence of Magnetism: Solara's Eden</image:title>
+            <image:caption>Final volume in the trilogy</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Books Section -->
+    <url>
+        <loc>https://verdancystoryworks.com/#books</loc>
+        <lastmod>2025-08-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Teaser Section -->
+    <url>
+        <loc>https://verdancystoryworks.com/#teaser</loc>
+        <lastmod>2025-08-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- About Section -->
+    <url>
+        <loc>https://verdancystoryworks.com/#about</loc>
+        <lastmod>2025-08-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Newsletter Section -->
+    <url>
+        <loc>https://verdancystoryworks.com/#newsletter</loc>
+        <lastmod>2025-08-23</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <!-- Google Search Console Verification File -->
+    <url>
+        <loc>https://verdancystoryworks.com/googlea2e45079fd62ebd3.html</loc>
+        <lastmod>2025-08-23</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.1</priority>
+    </url>
+
+</urlset>
