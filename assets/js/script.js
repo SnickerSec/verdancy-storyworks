@@ -22,11 +22,14 @@ function initNavigation() {
         navToggle.classList.toggle('active');
     });
 
-    // Close mobile menu when clicking on a link
+    // Close mobile menu when clicking on a link (except dropdown toggle)
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            navToggle.classList.remove('active');
+            // Don't close menu if this is the dropdown toggle
+            if (!this.classList.contains('dropdown-toggle')) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
         });
     });
 

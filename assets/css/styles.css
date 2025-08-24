@@ -911,7 +911,7 @@ main {
     .nav-menu {
         position: fixed;
         top: 80px;
-        left: 0;
+        right: 0;
         width: 100%;
         height: calc(100vh - 80px);
         background: rgba(10, 10, 10, 0.98);
@@ -921,9 +921,10 @@ main {
         align-items: center;
         padding-top: 2rem;
         gap: 2rem;
-        transform: translateX(-100%);
+        transform: translateX(100%);
         transition: transform 0.3s ease;
         z-index: 1000;
+        box-sizing: border-box;
     }
     
     .nav-menu.active {
