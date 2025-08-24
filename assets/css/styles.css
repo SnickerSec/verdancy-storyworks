@@ -862,6 +862,34 @@ main {
     color: var(--text-primary) !important;
 }
 
+/* Target Substack embed elements */
+.embed-container iframe::deep .embed-page,
+.embed-container iframe::deep .embed-page-inner {
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.embed-container iframe::deep .publication-name,
+.embed-container iframe::deep .publication-name a,
+.embed-container iframe::deep .publication-tagline,
+.embed-container iframe::deep .publication-meta {
+    color: var(--text-primary) !important;
+}
+
+/* Additional styling injection for iframe content */
+.embed-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: var(--bg-secondary);
+    opacity: 0;
+    z-index: -1;
+}
+
 .embed-container iframe {
     display: block;
     border-bottom-left-radius: 6px;

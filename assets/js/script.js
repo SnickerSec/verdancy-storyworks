@@ -141,6 +141,43 @@ function initScrollEffects() {
             }
         }, 2000);
     }
+    
+    // Style Substack iframe content
+    const substackIframe = document.querySelector('.embed-container iframe');
+    if (substackIframe) {
+        substackIframe.onload = function() {
+            try {
+                const iframeDoc = substackIframe.contentDocument || substackIframe.contentWindow.document;
+                const style = iframeDoc.createElement('style');
+                style.textContent = `
+                    .embed-page, .embed-page-inner {
+                        background: #1a1a1a !important;
+                        color: white !important;
+                    }
+                    .publication-name, .publication-name a, .publication-tagline, 
+                    .publication-meta, .pencraft {
+                        color: white !important;
+                    }
+                    .subscribe-widget, .form, .container-IpPqBD {
+                        background: #1a1a1a !important;
+                    }
+                    .emailInput-OkIMeB, .input-y4v6N4 {
+                        background: #2a2a2a !important;
+                        color: white !important;
+                        border-color: #00ffff !important;
+                    }
+                    .subscribe-btn, .button-VFSdkv {
+                        background: #00ff88 !important;
+                        color: #0a0a0a !important;
+                    }
+                `;
+                iframeDoc.head.appendChild(style);
+            } catch (e) {
+                // Cross-origin restrictions prevent styling - expected behavior
+                console.log('Substack iframe styling blocked by CORS policy');
+            }
+        };
+    }
 
     // Parallax effect for hero section
     const hero = document.querySelector('.hero');
