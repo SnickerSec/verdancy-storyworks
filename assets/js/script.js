@@ -128,6 +128,19 @@ function initScrollEffects() {
     animateElements.forEach(el => {
         observer.observe(el);
     });
+    
+    // Add random glitch effect to dystopian frame
+    const dystopianFrame = document.querySelector('.dystopian-frame');
+    if (dystopianFrame) {
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                dystopianFrame.classList.add('glitch-active');
+                setTimeout(() => {
+                    dystopianFrame.classList.remove('glitch-active');
+                }, 300);
+            }
+        }, 2000);
+    }
 
     // Parallax effect for hero section
     const hero = document.querySelector('.hero');
