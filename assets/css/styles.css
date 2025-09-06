@@ -1318,10 +1318,6 @@ main {
         letter-spacing: 0.5px;
     }
     
-    .logo-accent {
-        display: none;
-    }
-    
     .hero {
         min-height: 70vh;
     }
