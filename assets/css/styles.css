@@ -1076,6 +1076,24 @@ main {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .nav {
+        padding: 0 1rem;
+    }
+    
+    .nav-brand {
+        flex: 1;
+        gap: 0.5rem;
+    }
+    
+    .nav-logo {
+        height: 30px;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+    
     .nav-menu {
         position: fixed;
         top: 80px;
@@ -1287,6 +1305,23 @@ main {
 }
 
 @media (max-width: 480px) {
+    .nav {
+        padding: 0 0.5rem;
+    }
+    
+    .nav-logo {
+        height: 25px;
+    }
+    
+    .logo {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .logo-accent {
+        display: none;
+    }
+    
     .hero {
         min-height: 70vh;
     }
