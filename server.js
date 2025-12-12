@@ -1,9 +1,40 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
+const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const FORCE_HTTPS = process.env.FORCE_HTTPS === 'true';
+
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      fontSrc: ["'self'", "https:", "data:"],
+      connectSrc: ["'self'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
+
+// HTTPS redirect in production
+if (FORCE_HTTPS) {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+      next();
+    }
+  });
+}
 
 // Rate limiting to prevent DoS attacks
 const limiter = rateLimit({
@@ -99,7 +130,12 @@ app.get('*', (req, res) => {
 </html>`);
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Verdancy Storyworks server running on port ${PORT}`);
-  console.log(`🌐 Visit: http://localhost:${PORT}`);
-});
+// Only start server if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Verdancy Storyworks server running on port ${PORT}`);
+    console.log(`🌐 Visit: http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
