@@ -1,14 +1,27 @@
 const express = require('express');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the current directory
-app.use(express.static(__dirname));
+// Rate limiting to prevent DoS attacks
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
-// Serve assets
+// Apply rate limiter to all requests
+app.use(limiter);
+
+// Serve static assets only (not the entire source directory)
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+// Serve specific public files at root level
+app.use('/robots.txt', express.static(path.join(__dirname, 'robots.txt')));
+app.use('/sitemap.xml', express.static(path.join(__dirname, 'sitemap.xml')));
 
 // Define valid routes for your single page app
 const validRoutes = ['/', '/index.html', '/googlea2e45079fd62ebd3.html'];
