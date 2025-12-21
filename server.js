@@ -20,7 +20,7 @@ app.use(helmet({
       imgSrc: ["'self'", "data:", "https:"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
       connectSrc: ["'self'"],
-      frameSrc: ["'self'", "https://www.youtube.com", "https://verdancystoryworks.substack.com"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://www.youtube-nocookie.com", "https://verdancystoryworks.substack.com"],
     },
   },
   crossOriginEmbedderPolicy: false,
