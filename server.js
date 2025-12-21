@@ -37,12 +37,13 @@ if (FORCE_HTTPS) {
   });
 }
 
-// Rate limiting to prevent DoS attacks
+// Rate limiting to prevent DoS attacks (skip in development)
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // max 100 requests per windowMs per IP
+  max: NODE_ENV === 'production' ? 200 : 1000, // higher limit in dev
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => req.path.startsWith('/assets'), // don't count static assets
 });
 
 // Apply rate limiter to all requests
