@@ -1,0 +1,17 @@
+name: Trigger Claude on Code Review Request
+on:
+  pull_request:
+    types: [review_requested]
+
+jobs:
+  post-claude-trigger:
+    runs-on: ubuntu-latest
+    # Replace 'code-review[bot]' with your specific app's slug found in its settings
+    if: github.event.requested_reviewer.login == 'code-review-snickersec[bot]'
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Post @claude comment
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: "@claude please review this PR"
