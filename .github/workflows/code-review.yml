@@ -1,0 +1,17 @@
+name: Trigger Claude Review
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  mention-claude:
+    if: github.event.label.name == 'request-code-review'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Post Claude Comment
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "@claude"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
