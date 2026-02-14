@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 
 const express = require('express');
 const path = require('path');
@@ -70,7 +70,7 @@ app.get(validRoutes, (req, res) => {
 });
 
 // Handle 404 errors for non-existent routes
-app.get('*', (req, res) => {
+app.get('*path', (req, res) => {
   res.status(404).send(`<!DOCTYPE html>
 <html lang="en">
 <head>
