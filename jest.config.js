@@ -1,7 +1,9 @@
 module.exports = {
-  testEnvironment: 'node',
   verbose: true,
-  collectCoverageFrom: ['server.js'],
+  collectCoverageFrom: [
+    'server.js',
+    'assets/js/script.js'
+  ],
   coverageThreshold: {
     global: {
       branches: 50,
@@ -10,4 +12,16 @@ module.exports = {
       statements: 50,
     },
   },
+  projects: [
+    {
+      displayName: 'backend',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/server.test.js'],
+    },
+    {
+      displayName: 'frontend',
+      testEnvironment: 'jsdom',
+      testMatch: ['<rootDir>/assets/js/script.test.js'],
+    },
+  ],
 };

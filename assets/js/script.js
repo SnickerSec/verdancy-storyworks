@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollEffects();
     initGlitchEffects();
     initTerminalAnimation();
-    initNewsletterForm();
     initSmoothScrolling();
 });
 
@@ -66,7 +65,8 @@ function initNavigation() {
         
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
+            const href = link.getAttribute('href');
+            if (href && href !== '#' && href === `#${current}`) {
                 link.classList.add('active');
             }
         });
@@ -270,138 +270,28 @@ function initTerminalAnimation() {
     }
 }
 
-// Newsletter form functionality
-function initNewsletterForm() {
-    const form = document.querySelector('.newsletter-form');
-    const input = document.querySelector('.form-input');
-    const status = document.querySelector('.form-status');
-
-    if (form) {
-        // Check if EmailJS is configured
-        const isConfigured = EMAIL_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY' && 
-                           EMAIL_CONFIG.serviceId !== 'YOUR_SERVICE_ID' && 
-                           EMAIL_CONFIG.templateId !== 'YOUR_TEMPLATE_ID';
-
-        if (isConfigured) {
-            // Initialize EmailJS
-            emailjs.init({
-                publicKey: EMAIL_CONFIG.publicKey,
-            });
-        }
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = input.value.trim();
-            
-            if (!isValidEmail(email)) {
-                showStatus('Please enter a valid email address.', 'error');
-                return;
-            }
-
-            showStatus('Connecting to transmission network...', 'loading');
-
-            if (!isConfigured) {
-                // Fallback for when EmailJS is not configured
-                console.warn('EmailJS not configured. Newsletter subscription for:', email);
-                setTimeout(() => {
-                    showStatus('Configuration required. Check console for setup instructions.', 'error');
-                }, 1000);
-                return;
-            }
-
-            // Send email using EmailJS
-            const templateParams = {
-                user_email: email,
-                message: `New newsletter subscription from: ${email}`,
-                to_name: 'Verdancy Storyworks',
-                to_email: EMAIL_CONFIG.adminEmail, // Email to receive notifications
-                from_name: email,
-                current_time: new Date().toLocaleString()
-            };
-
-            // Debug: Log configuration being used
-            console.log('EmailJS Config:', {
-                serviceId: EMAIL_CONFIG.serviceId,
-                templateId: EMAIL_CONFIG.templateId,
-                publicKey: EMAIL_CONFIG.publicKey.substring(0, 5) + '...'
-            });
-            console.log('Template params:', templateParams);
-
-            emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
-                .then((response) => {
-                    console.log('Newsletter subscription successful!', response.status, response.text);
-                    showStatus('Successfully connected! Welcome to the network.', 'success');
-                    input.value = '';
-                }, (error) => {
-                    console.error('Newsletter subscription failed:', error);
-                    console.error('Error details:', {
-                        status: error.status,
-                        text: error.text,
-                        message: error.message
-                    });
-                    
-                    // More specific error messages
-                    let errorMsg = 'Connection failed. Please try again later.';
-                    if (error.status === 400) {
-                        errorMsg = 'Invalid request. Please check your email format.';
-                    } else if (error.status === 401 || error.status === 403) {
-                        errorMsg = 'Authentication failed. Please contact support.';
-                    } else if (error.status === 404) {
-                        errorMsg = 'Service not found. Please contact support.';
-                    }
-                    
-                    showStatus(errorMsg, 'error');
-                });
-        });
-
-        // Input focus effects
-        input.addEventListener('focus', function() {
-            this.parentElement.classList.add('focused');
-        });
-
-        input.addEventListener('blur', function() {
-            this.parentElement.classList.remove('focused');
-        });
-    }
-
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    function showStatus(message, type) {
-        status.textContent = message;
-        status.className = `form-status ${type}`;
-        
-        if (type === 'success' || type === 'error') {
-            setTimeout(() => {
-                status.textContent = '';
-                status.className = 'form-status';
-            }, 3000);
-        }
-    }
-}
-
 // Smooth scrolling for navigation links
 function initSmoothScrolling() {
     const navLinks = document.querySelectorAll('a[href^="#"]');
     
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
             const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
             
-            if (targetSection) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight;
+            if (targetId && targetId.startsWith('#') && targetId.length > 1) {
+                e.preventDefault();
+                const targetSection = document.querySelector(targetId);
                 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                if (targetSection) {
+                    const header = document.querySelector('.header');
+                    const headerHeight = header ? header.offsetHeight : 0;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
@@ -464,7 +354,7 @@ function debounce(func, wait) {
 }
 
 // Add CSS animations
-const additionalStyles = `
+var additionalStyles = `
     .animate-in {
         animation: fadeInUp 0.8s ease forwards;
     }
@@ -499,37 +389,6 @@ const additionalStyles = `
         80% { transform: translate(2px, -2px); }
     }
 
-    .form-status {
-        margin-top: 1rem;
-        padding: 0.5rem;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        font-weight: 500;
-    }
-
-    .form-status.success {
-        background: rgba(0, 255, 136, 0.1);
-        color: var(--accent-green);
-        border: 1px solid var(--accent-green);
-    }
-
-    .form-status.error {
-        background: rgba(255, 68, 68, 0.1);
-        color: var(--accent-red);
-        border: 1px solid var(--accent-red);
-    }
-
-    .form-status.loading {
-        background: rgba(0, 255, 255, 0.1);
-        color: var(--accent-blue);
-        border: 1px solid var(--accent-blue);
-    }
-
-    .form-group.focused .form-input {
-        border-color: var(--accent-blue);
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-    }
-
     .ripple {
         position: absolute;
         border-radius: 50%;
@@ -549,6 +408,19 @@ const additionalStyles = `
 `;
 
 // Inject additional styles
-const styleSheet = document.createElement('style');
-styleSheet.textContent = additionalStyles;
-document.head.appendChild(styleSheet);
+if (typeof document !== 'undefined' && document.head) {
+    var styleSheet = document.createElement('style');
+    styleSheet.textContent = additionalStyles;
+    document.head.appendChild(styleSheet);
+}
+
+// Export functions for testing if in Node environment
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        initNavigation,
+        initScrollEffects,
+        initGlitchEffects,
+        initTerminalAnimation,
+        initSmoothScrolling
+    };
+}
