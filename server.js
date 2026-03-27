@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const FORCE_HTTPS = process.env.FORCE_HTTPS === 'true';
 
+// Trust proxy if we're behind a load balancer (Heroku, etc.)
+app.set('trust proxy', 1);
+
 // Security headers
 app.use(helmet({
   contentSecurityPolicy: {
@@ -19,12 +22,17 @@ app.use(helmet({
       scriptSrc: ["'self'", "https://cdn.jsdelivr.net"],
       imgSrc: ["'self'", "data:", "https:"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-      connectSrc: ["'self'"],
+      connectSrc: ["'self'", "https://api.emailjs.com"],
       frameSrc: ["'self'", "https://www.youtube.com", "https://www.youtube-nocookie.com", "https://verdancystoryworks.substack.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
     },
   },
   crossOriginEmbedderPolicy: false,
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  xssFilter: true,
+  noSniff: true,
+  hidePoweredBy: true,
 }));
 
 // HTTPS redirect in production
